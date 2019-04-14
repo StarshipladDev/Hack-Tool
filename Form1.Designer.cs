@@ -30,6 +30,7 @@
         {
             this.b = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // b
@@ -42,6 +43,18 @@
             this.b.Text = "Begin hack";
             this.b.UseVisualStyleBackColor = false;
             this.b.Click += new System.EventHandler(this.button1_Click);
+            //
+            //Text box
+            //
+            
+            this.textBox.Location = new System.Drawing.Point(150,0);
+            this.textBox.Name = "b";
+            this.textBox.Size = new System.Drawing.Size(250,250);
+            this.textBox.TabIndex = 1;
+            this.textBox.Text = "Type url with Get method here";
+
+
+            //
             // 
             // label1
             // 
@@ -49,7 +62,7 @@
             this.label1.Location = new System.Drawing.Point(332, 134);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 2;
             this.label1.Text = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
@@ -61,6 +74,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.b);
+            this.Controls.Add(this.textBox);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -72,6 +86,7 @@
 
         private System.Windows.Forms.Button b;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox;
     }
 }
 
