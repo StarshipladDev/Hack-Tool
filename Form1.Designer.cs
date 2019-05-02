@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.b = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.TextBox();
             this.textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -58,13 +58,16 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(332, 134);
+            this.label1.Location = new System.Drawing.Point(290,200);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.Size = new System.Drawing.Size(500,300);
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.ReadOnly = false;
+            this.label1.Multiline = true;
+            this.label1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.label1.WordWrap = true;
             // 
             // Form1
             // 
@@ -85,7 +88,7 @@
         #endregion
 
         private System.Windows.Forms.Button b;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox label1;
         private System.Windows.Forms.TextBox textBox;
     }
 }
