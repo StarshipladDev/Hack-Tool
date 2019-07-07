@@ -69,8 +69,11 @@
             this.label1.Click += new System.EventHandler(this.label1_Click);
             this.label1.ReadOnly = false;
             this.label1.Multiline = true;
-            this.label1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.label1.WordWrap = true;
+            this.label1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            //Useful for new lines
+            this.label1.AcceptsReturn = true;
+            //Only false if horizontal scrollbar used
+            this.label1.WordWrap = false;
             //
             // 
             // label2 - Test data
