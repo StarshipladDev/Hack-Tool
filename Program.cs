@@ -10,6 +10,7 @@ namespace Bruteforce1
     {
         /// <summary>
         /// The main entry point for the application.
+        /// It sets visual styles from pre-fabs then runs a new instance of  <see cref="Form1"/>
         /// </summary>
         [STAThread]
         static void Main()
