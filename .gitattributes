@@ -8,7 +8,8 @@
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
-*.rtf           diff=astextplain
+*.cs  linguist-detectable=true
+*.rtf linguist-detectable=false
 *.gitattributes text
 .gitignore      text
 *.md            text
