@@ -188,13 +188,15 @@ namespace Bruteforce1
                             int x = 0;
                             foreach (Match m in matches)
                             {
-                                if( !m.Groups[1].Value.Equals(""))
+                                if( !m.Groups[1].Value.Equals("") && x==3)
                                 {
 
                                     tablename = m.Groups[1].Value;
                                 }
+                                x++;
 
                             }
+                            x = 0;
                             output += "\r\n ----- TABLE NAME IS :" + tablename+ "\r\n";
                         }
                         //If database unconnected, 
